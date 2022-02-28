@@ -9,5 +9,5 @@ Purely just to brush up. Maybe in the future, can become a tangible app... but w
 ## To Start 
 
 In the root directory, make sure to run 
-`npm run start` to trigger the HTTP server and webpack watch to recompile on changes, and
+`npm run start` to trigger the HTTP server and webpack watch to recompile on changes, and  
 `npm run server` to trigger the JSON server to mock REST calls to localhost:4000, which is a lite db based on db.json at room
