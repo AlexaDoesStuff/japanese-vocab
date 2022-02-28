@@ -1,18 +1,13 @@
 {
-  "recipes": [
+  "flashcard": [
     {
       "id": 1,
-      "drinkimg": "https://kungfutea.com/wp-content/uploads/2021/08/Coffee_MilkTea.jpg",
-      "drinkname": "KF Milk Tea",
-      "type": "Classic",
-      "base": "Original",
-      "tea": "Black",
-      "sugar": "Syrup",
-      "milk": true,
-      "ingredients": ["Sugar", "Honey", "Milk Powder"],
-      "medium": [1.5, 70, 2],
-      "large": [2, 100, 3],
-      "hot": [2, 100, 3]
+      "eng": "education",
+      "jap": "教育・育成",
+      "yomi": "きょういく・いくせい",
+      "tags": ["N1", "N2", "Everyday"],
+      "sentences": "教育は家庭に始まる。",
+      "priority": "High"
     }
   ],
   "user": [
