@@ -17,9 +17,28 @@ return /******/ (() => { // webpackBootstrap
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "rootEl": () => (/* binding */ rootEl),
+/* harmony export */   "navEl": () => (/* binding */ navEl)
+/* harmony export */ });
+/**
+ * Creates a dom element from an html string.
+ * @return {const: rootEl }
+ * 
+ * 
+ */
+
+const rootEl = document.getElementById('app');
+const navEl = document.getElementById('navigation');
+
+/***/ }),
+/* 2 */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "landing": () => (/* binding */ landing)
 /* harmony export */ });
-/* harmony import */ var _helpers_global_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2);
+/* harmony import */ var _helpers_global_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
 /* harmony import */ var _helpers_escapeString_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3);
 /* harmony import */ var _helpers_createElementFromString_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4);
 /* harmony import */ var _cherry_308_png__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(5);
@@ -55,25 +74,6 @@ function landing() {
 
 
 
-
-/***/ }),
-/* 2 */
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "rootEl": () => (/* binding */ rootEl),
-/* harmony export */   "navEl": () => (/* binding */ navEl)
-/* harmony export */ });
-/**
- * Creates a dom element from an html string.
- * @return {const: rootEl }
- * 
- * 
- */
-
-const rootEl = document.getElementById('app');
-const navEl = document.getElementById('navigation');
 
 /***/ }),
 /* 3 */
@@ -121,9 +121,13 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 /* 5 */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-module.exports = __webpack_require__.p + "f69e09bb21def7551139.png";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + "images/cherry-308.png");
 
 /***/ }),
 /* 6 */
@@ -131,21 +135,292 @@ module.exports = __webpack_require__.p + "f69e09bb21def7551139.png";
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "home": () => (/* binding */ home)
+/* harmony export */ });
+/* harmony import */ var _components_randomCards__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
+/* harmony import */ var _helpers_createElementFromString__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4);
+/* home.js
+* homepage after landing 
+*/
+
+
+
+
+const homeDiv = document.createElement('div');
+homeDiv.classList.add('home');
+
+const randomCardBlock = () => {
+  randomCardBlock.called = true;
+  (0,_components_randomCards__WEBPACK_IMPORTED_MODULE_0__.randomCards)().then(x => {
+    homeDiv.append(x);
+  })
+}
+
+function home() {
+  if(!randomCardBlock.called) {
+    randomCardBlock();
+  }
+  return homeDiv;
+}
+
+/***/ }),
+/* 7 */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "randomCards": () => (/* binding */ randomCards)
+/* harmony export */ });
+/* harmony import */ var _helpers_createElementFromString__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4);
+/* randomCards.js
+* generate random cards on the home page from jisho.org api 
+* bypassing cors https://robwu.nl/cors-anywhere.html
+* https://cors-anywhere.herokuapp.com/
+*/
+
+
+var url = 'http://localhost:4000/flashcard/'
+
+const setRandomData = async () => {
+  return new Promise((resolve, reject) => {
+    fetch(url)
+    .then(response => response.json())
+    .then(data => 
+      resolve(data)
+    )
+    .catch((reject) => {throw new Error(reject)});
+  });
+}
+
+async function randomCards() {
+  var cardBlock = document.createElement('div');
+  cardBlock.classList.add('card-holder');
+  let words = await setRandomData();
+
+  for(var i = 0; i < words.length; i++) {
+    let createCard = (0,_helpers_createElementFromString__WEBPACK_IMPORTED_MODULE_0__.createElementFromString)(`
+      <div class="card">
+        ${words[i].jap} <br/>
+        ${words[i].yomi} <br />
+        ${words[i].eng} <br />
+        ${words[i].sentences}
+      </div>
+    `)
+    cardBlock.appendChild(createCard);
+  }
+
+  return cardBlock;
+}
+
+/***/ }),
+/* 8 */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "cards": () => (/* binding */ cards)
+/* harmony export */ });
+/* harmony import */ var _helpers_createElementFromString__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4);
+/* cards.js
+* cards pge
+*/
+
+
+
+function cards() {
+  return (0,_helpers_createElementFromString__WEBPACK_IMPORTED_MODULE_0__.createElementFromString)(`
+    <div class="cards">
+      cards
+    </div> 
+  `)
+}
+
+/***/ }),
+/* 9 */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "decks": () => (/* binding */ decks)
+/* harmony export */ });
+/* harmony import */ var _helpers_createElementFromString__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4);
+/* decks.js
+* deck page
+*/
+
+
+
+function decks() {
+  return (0,_helpers_createElementFromString__WEBPACK_IMPORTED_MODULE_0__.createElementFromString)(`
+    <div class="decks">
+      decks
+    </div> 
+  `)
+}
+
+/***/ }),
+/* 10 */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "navigatorButtons": () => (/* binding */ navigatorButtons)
+/* harmony export */ });
+/* harmony import */ var _helpers_global_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+/* harmony import */ var _helpers_escapeString_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3);
+/* harmony import */ var _helpers_createElementFromString_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4);
+/* navigator.js
+* If on landing, display Let's Go! button
+* If on either home, deck or cards button, 
+*/
+
+
+
+
+
+
+// import { clearAllFromRoot } from '../../helpers/clearAllFromRoot.js';
+
+const landingSingle = (0,_helpers_createElementFromString_js__WEBPACK_IMPORTED_MODULE_2__.createElementFromString)(`
+  <div>
+    <button class="navigator" id="goto">
+      Let's Go!
+    </button>
+  </div>
+`)
+
+const threeGroup = (0,_helpers_createElementFromString_js__WEBPACK_IMPORTED_MODULE_2__.createElementFromString)(`
+  <div>
+    <button class="navigator" id="home">
+      Home
+    </button>
+    <button class="navigator" id="decks">
+      Decks
+    </button>
+    <button class="navigator" id="cards">
+      Cards
+    </button> 
+  </div>
+`)
+
+function navigatorButtons(curPage) {
+  var buttonGroup = document.createElement('div');
+  buttonGroup.classList.add('navigator-row');
+
+  var allButtons;
+  
+  if(curPage == 'landing') {
+    allButtons = landingSingle;
+  } else if (curPage != 'landing') {
+    allButtons = threeGroup;
+  }
+
+  buttonGroup.appendChild(allButtons);
+  
+  return buttonGroup;
+}
+
+
+
+
+/***/ }),
+/* 11 */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "applyNavigation": () => (/* binding */ applyNavigation)
+/* harmony export */ });
+/* harmony import */ var _helpers_global_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+/* harmony import */ var _helpers_clearAllFromRoot_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(12);
+/* harmony import */ var _pages_home_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6);
+/* harmony import */ var _pages_decks_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(9);
+/* harmony import */ var _pages_cards_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(8);
+/* harmony import */ var _pages_landing_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(2);
+/* harmony import */ var _navigatorButtons_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(10);
+/**
+ * Clears the entire dom plus event handlers when navigating between pages.
+ * @return {Event}
+ */
+
+
+
+
+
+
+
+
+
+
+
+const determineContents = (navi) => {
+  if(navi == 'home') {
+    return (0,_pages_home_js__WEBPACK_IMPORTED_MODULE_2__.home)();
+  } else if (navi == 'goto') {
+    (0,_helpers_clearAllFromRoot_js__WEBPACK_IMPORTED_MODULE_1__.clearAllFromRoot)(_helpers_global_js__WEBPACK_IMPORTED_MODULE_0__.navEl);
+    _helpers_global_js__WEBPACK_IMPORTED_MODULE_0__.navEl.appendChild((0,_navigatorButtons_js__WEBPACK_IMPORTED_MODULE_6__.navigatorButtons)(_pages_home_js__WEBPACK_IMPORTED_MODULE_2__.home));
+    return (0,_pages_home_js__WEBPACK_IMPORTED_MODULE_2__.home)();
+  } else if(navi == 'decks') {
+    return (0,_pages_decks_js__WEBPACK_IMPORTED_MODULE_3__.decks)();
+  } else if(navi == 'cards') {
+    return (0,_pages_cards_js__WEBPACK_IMPORTED_MODULE_4__.cards)();
+  } else {
+    return (0,_pages_landing_js__WEBPACK_IMPORTED_MODULE_5__.landing)();
+  }
+}
+
+function applyNavigation() {
+  document.querySelectorAll('.navigator').forEach(function(navigator) {
+    navigator.addEventListener('click', function() {
+      localStorage.setItem('hasVisited', navigator.id);
+      (0,_helpers_clearAllFromRoot_js__WEBPACK_IMPORTED_MODULE_1__.clearAllFromRoot)(_helpers_global_js__WEBPACK_IMPORTED_MODULE_0__.rootEl);
+      _helpers_global_js__WEBPACK_IMPORTED_MODULE_0__.rootEl.appendChild(determineContents(navigator.id));
+    })
+  })
+}
+
+
+/***/ }),
+/* 12 */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "clearAllFromRoot": () => (/* binding */ clearAllFromRoot)
+/* harmony export */ });
+/**
+ * Clears the entire dom plus event handlers when navigating between pages.
+ * @return {Event}
+ */
+
+function clearAllFromRoot(parent) {
+  while (parent.firstChild) {
+    parent.removeChild(parent.firstChild);
+  }
+}
+
+
+/***/ }),
+/* 13 */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(14);
 /* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(15);
 /* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(9);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(16);
 /* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(10);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(17);
 /* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(11);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(18);
 /* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(12);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(19);
 /* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_node_modules_sass_loader_dist_cjs_js_styles_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(13);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_node_modules_sass_loader_dist_cjs_js_styles_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(20);
 
       
       
@@ -176,7 +451,7 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 
 /***/ }),
-/* 7 */
+/* 14 */
 /***/ ((module) => {
 
 
@@ -285,7 +560,7 @@ module.exports = function (list, options) {
 };
 
 /***/ }),
-/* 8 */
+/* 15 */
 /***/ ((module) => {
 
 
@@ -360,7 +635,7 @@ function domAPI(options) {
 module.exports = domAPI;
 
 /***/ }),
-/* 9 */
+/* 16 */
 /***/ ((module) => {
 
 
@@ -404,7 +679,7 @@ function insertBySelector(insert, style) {
 module.exports = insertBySelector;
 
 /***/ }),
-/* 10 */
+/* 17 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 
@@ -421,7 +696,7 @@ function setAttributesWithoutAttributes(styleElement) {
 module.exports = setAttributesWithoutAttributes;
 
 /***/ }),
-/* 11 */
+/* 18 */
 /***/ ((module) => {
 
 
@@ -437,7 +712,7 @@ function insertStyleElement(options) {
 module.exports = insertStyleElement;
 
 /***/ }),
-/* 12 */
+/* 19 */
 /***/ ((module) => {
 
 
@@ -458,29 +733,29 @@ function styleTagTransform(css, styleElement) {
 module.exports = styleTagTransform;
 
 /***/ }),
-/* 13 */
+/* 20 */
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(14);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(21);
 /* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(15);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(22);
 /* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
 // Imports
 
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "html {\n  overflow: hidden;\n}\n\n.home, .decks, .cards {\n  margin: auto;\n  width: 100vw;\n  max-width: 1240px;\n  height: 100vh;\n  justify-content: center;\n  align-items: center;\n  margin-top: 100px;\n}\n\n.getin-block {\n  max-width: 80vw;\n  padding-left: 80pt;\n  position: absolute;\n}\n.getin-block p.getin-text {\n  font-size: 120px;\n  font-weight: bolder;\n  font-family: \"Futura XBlk BT\";\n  text-shadow: -4px -4px #4FC292;\n  color: white;\n  -webkit-text-stroke: 1px black;\n}\n\n.navigator-row {\n  position: absolute;\n  right: 0;\n  top: 0;\n}\n.navigator-row button {\n  padding: 20px;\n  margin: 10pt;\n  width: 180px;\n  font-family: \"Futura XBlk BT\";\n  font-size: 18pt;\n  text-transform: uppercase;\n  background-color: #4FC292;\n  border-radius: 0;\n  border: 1px solid black;\n}\n.navigator-row button:hover {\n  background-color: white;\n}\n\n.cherry {\n  max-width: 100vw;\n  height: 500px;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "html {\n  overflow: hidden;\n}\n\n.home, .decks, .cards {\n  margin: auto;\n  width: 100vw;\n  max-width: 1240px;\n  height: 100vh;\n  justify-content: center;\n  align-items: center;\n  margin-top: 100px;\n}\n\n.getin-block {\n  max-width: 80vw;\n  padding-left: 80pt;\n  position: absolute;\n}\n.getin-block p.getin-text {\n  font-size: 120px;\n  font-weight: bolder;\n  font-family: \"Futura XBlk BT\";\n  text-shadow: -4px -4px #4FC292;\n  color: white;\n  -webkit-text-stroke: 1px black;\n}\n\n.navigator-row {\n  position: absolute;\n  right: 0;\n  top: 0;\n}\n.navigator-row button {\n  padding: 20px;\n  margin: 10pt;\n  width: 180px;\n  font-family: \"Futura XBlk BT\";\n  font-size: 18pt;\n  text-transform: uppercase;\n  background-color: #4FC292;\n  border-radius: 0;\n  border: 1px solid black;\n}\n.navigator-row button:hover {\n  background-color: white;\n}\n\n.cherry {\n  max-width: 100vw;\n  height: 500px;\n}\n\n.card-holder {\n  display: flex;\n}\n.card-holder .card {\n  width: 300px;\n  border: 1px solid black;\n  padding: 10px;\n  margin: 5px;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
 
 /***/ }),
-/* 14 */
+/* 21 */
 /***/ ((module) => {
 
 
@@ -490,7 +765,7 @@ module.exports = function (i) {
 };
 
 /***/ }),
-/* 15 */
+/* 22 */
 /***/ ((module) => {
 
 
@@ -595,248 +870,6 @@ module.exports = function (cssWithMappingToString) {
 
   return list;
 };
-
-/***/ }),
-/* 16 */
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "navigatorButtons": () => (/* binding */ navigatorButtons)
-/* harmony export */ });
-/* harmony import */ var _helpers_global_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2);
-/* harmony import */ var _helpers_escapeString_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3);
-/* harmony import */ var _helpers_createElementFromString_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4);
-/* navigator.js
-* If on landing, display Let's Go! button
-* If on either home, deck or cards button, 
-*/
-
-
-
-
-
-
-// import { clearAllFromRoot } from '../../helpers/clearAllFromRoot.js';
-
-const landingSingle = (0,_helpers_createElementFromString_js__WEBPACK_IMPORTED_MODULE_2__.createElementFromString)(`
-  <div>
-    <button class="navigator" id="goto">
-      Let's Go!
-    </button>
-  </div>
-`)
-
-const threeGroup = (0,_helpers_createElementFromString_js__WEBPACK_IMPORTED_MODULE_2__.createElementFromString)(`
-  <div>
-    <button class="navigator" id="home">
-      Home
-    </button>
-    <button class="navigator" id="decks">
-      Decks
-    </button>
-    <button class="navigator" id="cards">
-      Cards
-    </button> 
-  </div>
-`)
-
-function navigatorButtons(curPage) {
-  var buttonGroup = document.createElement('div');
-  buttonGroup.classList.add('navigator-row');
-
-  var allButtons;
-  
-  if(curPage == 'landing') {
-    allButtons = landingSingle;
-  } else if (curPage != 'landing') {
-    allButtons = threeGroup;
-  }
-
-  buttonGroup.appendChild(allButtons);
-  
-  return buttonGroup;
-}
-
-
-
-
-/***/ }),
-/* 17 */
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "clearAllFromRoot": () => (/* binding */ clearAllFromRoot)
-/* harmony export */ });
-/**
- * Clears the entire dom plus event handlers when navigating between pages.
- * @return {Event}
- */
-
-function clearAllFromRoot(parent) {
-  while (parent.firstChild) {
-    parent.removeChild(parent.firstChild);
-  }
-}
-
-
-/***/ }),
-/* 18 */
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "home": () => (/* binding */ home)
-/* harmony export */ });
-/* harmony import */ var _components_randomCards__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(22);
-/* harmony import */ var _helpers_createElementFromString__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4);
-/* home.js
-* homepage after landing 
-*/
-
-
-
-
-const homeDiv = document.createElement('div');
-homeDiv.classList.add('home');
-
-var skeleton = (0,_helpers_createElementFromString__WEBPACK_IMPORTED_MODULE_1__.createElementFromString)(`
-<div class="home">
-  homepage
-</div> 
-`)
-
-function home() {
-  ;(0,_components_randomCards__WEBPACK_IMPORTED_MODULE_0__.randomCards)();
-  homeDiv.innerText = 'homepage'
-  return homeDiv;
-}
-
-/***/ }),
-/* 19 */
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "applyNavigation": () => (/* binding */ applyNavigation)
-/* harmony export */ });
-/* harmony import */ var _helpers_global_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2);
-/* harmony import */ var _helpers_clearAllFromRoot_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(17);
-/* harmony import */ var _pages_home_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(18);
-/* harmony import */ var _pages_decks_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(20);
-/* harmony import */ var _pages_cards_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(21);
-/* harmony import */ var _pages_landing_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1);
-/**
- * Clears the entire dom plus event handlers when navigating between pages.
- * @return {Event}
- */
-
-
-
-
-
-
-
-
-
-const determineContents = (navi) => {
-  if(navi == 'home' || navi == 'goto') {
-    return (0,_pages_home_js__WEBPACK_IMPORTED_MODULE_2__.home)();
-  } else if(navi == 'decks') {
-    return (0,_pages_decks_js__WEBPACK_IMPORTED_MODULE_3__.decks)();
-  } else if(navi == 'cards') {
-    return (0,_pages_cards_js__WEBPACK_IMPORTED_MODULE_4__.cards)();
-  } else {
-    return (0,_pages_landing_js__WEBPACK_IMPORTED_MODULE_5__.landing)();
-  }
-}
-
-function applyNavigation() {
-  document.querySelectorAll('.navigator').forEach(function(navigator) {
-    navigator.addEventListener('click', function() {
-      localStorage.setItem('hasVisited', navigator.id);
-      (0,_helpers_clearAllFromRoot_js__WEBPACK_IMPORTED_MODULE_1__.clearAllFromRoot)(_helpers_global_js__WEBPACK_IMPORTED_MODULE_0__.rootEl);
-      _helpers_global_js__WEBPACK_IMPORTED_MODULE_0__.rootEl.appendChild(determineContents(navigator.id));
-    })
-  })
-}
-
-
-/***/ }),
-/* 20 */
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "decks": () => (/* binding */ decks)
-/* harmony export */ });
-/* harmony import */ var _helpers_createElementFromString__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4);
-/* decks.js
-* deck page
-*/
-
-
-
-function decks() {
-  return (0,_helpers_createElementFromString__WEBPACK_IMPORTED_MODULE_0__.createElementFromString)(`
-    <div class="decks">
-      decks
-    </div> 
-  `)
-}
-
-/***/ }),
-/* 21 */
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "cards": () => (/* binding */ cards)
-/* harmony export */ });
-/* harmony import */ var _helpers_createElementFromString__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4);
-/* cards.js
-* cards pge
-*/
-
-
-
-function cards() {
-  return (0,_helpers_createElementFromString__WEBPACK_IMPORTED_MODULE_0__.createElementFromString)(`
-    <div class="cards">
-      cards
-    </div> 
-  `)
-}
-
-/***/ }),
-/* 22 */
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "randomCards": () => (/* binding */ randomCards)
-/* harmony export */ });
-/* harmony import */ var _helpers_createElementFromString__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4);
-/* randomCards.js
-* generate random cards on the home page from jisho.org api 
-* bypassing cors https://robwu.nl/cors-anywhere.html
-* https://cors-anywhere.herokuapp.com/
-*/
-
-
-var url = 'http://localhost:4000/flashcard/1'
-
-const setRandomData = () => {
-  fetch(url)
-  .then(response => response.json())
-  .then(data => console.log(data));
-  return;
-}
-
-async function randomCards() {
-  setRandomData();
-}
 
 /***/ })
 /******/ 	]);
@@ -943,14 +976,14 @@ var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _helpers_global_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2);
-/* harmony import */ var _pages_landing_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1);
-/* harmony import */ var _pages_home_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(18);
-/* harmony import */ var _pages_cards_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(21);
-/* harmony import */ var _pages_decks_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(20);
-/* harmony import */ var _navigators_navigatorButtons_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(16);
-/* harmony import */ var _navigators_applyNavigation_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(19);
-/* harmony import */ var _styles_styles_scss__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(6);
+/* harmony import */ var _helpers_global_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+/* harmony import */ var _pages_landing_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2);
+/* harmony import */ var _pages_home_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6);
+/* harmony import */ var _pages_cards_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8);
+/* harmony import */ var _pages_decks_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(9);
+/* harmony import */ var _navigators_navigatorButtons_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(10);
+/* harmony import */ var _navigators_applyNavigation_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(11);
+/* harmony import */ var _styles_styles_scss__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(13);
 /* App.js
 * Main entry point to this practice repo... not sure what I'm going to make but I'd
 * like to practice coding 

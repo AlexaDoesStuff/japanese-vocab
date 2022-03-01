@@ -4,15 +4,21 @@
  */
 
 import { rootEl } from '../helpers/global.js';
+import { navEl } from '../helpers/global.js';
 
 import { clearAllFromRoot } from '../helpers/clearAllFromRoot.js';
 import { home } from '../pages/home.js';
 import { decks } from '../pages/decks.js';
 import { cards } from '../pages/cards.js';
 import { landing } from '../pages/landing.js';
+import { navigatorButtons } from './navigatorButtons.js';
 
 const determineContents = (navi) => {
-  if(navi == 'home' || navi == 'goto') {
+  if(navi == 'home') {
+    return home();
+  } else if (navi == 'goto') {
+    clearAllFromRoot(navEl);
+    navEl.appendChild(navigatorButtons(home));
     return home();
   } else if(navi == 'decks') {
     return decks();

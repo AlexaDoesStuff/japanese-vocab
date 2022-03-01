@@ -8,6 +8,15 @@
       "tags": ["N1", "N2", "Everyday"],
       "sentences": "教育は家庭に始まる。",
       "priority": "High"
+    },
+    {
+      "id": 2,
+      "eng": "documents",
+      "jap": "資料",
+      "yomi": "しりょう",
+      "tags": ["N2", "Everyday", "Noun"],
+      "sentences": "新しい仕事を始まりたびにいつもいっぱいな資料を申し込みしないといけません.",
+      "priority": "High"
     }
   ],
   "user": [

@@ -8,14 +8,16 @@ import { createElementFromString } from "../helpers/createElementFromString";
 const homeDiv = document.createElement('div');
 homeDiv.classList.add('home');
 
-var skeleton = createElementFromString(`
-<div class="home">
-  homepage
-</div> 
-`)
+const randomCardBlock = () => {
+  randomCardBlock.called = true;
+  randomCards().then(x => {
+    homeDiv.append(x);
+  })
+}
 
 export function home() {
-  randomCards();
-  homeDiv.innerText = 'homepage'
+  if(!randomCardBlock.called) {
+    randomCardBlock();
+  }
   return homeDiv;
 }
